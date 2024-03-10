@@ -17,7 +17,8 @@ logging.getLogger("numba").setLevel(logging.WARNING)
 from multiprocessing import Process
 
 exp_dir = sys.argv[1]
-f = open("%s/extract_f0_feature.log" % exp_dir, "a+")
+with open("%s/extract_f0_feature.log" % exp_dir, "a+") as f:
+    pass
 
 
 def printt(strr):

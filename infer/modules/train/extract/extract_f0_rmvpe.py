@@ -21,7 +21,8 @@ i_gpu = sys.argv[3]
 os.environ["CUDA_VISIBLE_DEVICES"] = str(i_gpu)
 exp_dir = sys.argv[4]
 is_half = sys.argv[5]
-f = open("%s/extract_f0_feature.log" % exp_dir, "a+")
+with open("%s/extract_f0_feature.log" % exp_dir, "a+") as f:
+    pass
 
 
 def printt(strr):

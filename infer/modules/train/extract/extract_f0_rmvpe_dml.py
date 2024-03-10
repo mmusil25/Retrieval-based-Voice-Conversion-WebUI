@@ -19,7 +19,8 @@ exp_dir = sys.argv[1]
 import torch_directml
 
 device = torch_directml.device(torch_directml.default_device())
-f = open("%s/extract_f0_feature.log" % exp_dir, "a+")
+with open("%s/extract_f0_feature.log" % exp_dir, "a+") as f:
+    pass
 
 
 def printt(strr):

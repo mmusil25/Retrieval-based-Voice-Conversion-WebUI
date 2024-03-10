@@ -25,7 +25,8 @@ from infer.lib.audio import load_audio
 from infer.lib.slicer2 import Slicer
 
 mutex = multiprocessing.Lock()
-f = open("%s/preprocess.log" % exp_dir, "a+")
+with open("%s/preprocess.log" % exp_dir, "a+") as f:
+    pass
 
 
 def println(strr):
