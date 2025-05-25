@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +15,6 @@ from infer.lib.train import utils
 hps = utils.get_hparams()
 os.environ["CUDA_VISIBLE_DEVICES"] = hps.gpus.replace("-", ",")
 n_gpus = len(hps.gpus.split("-"))
-from random import randint, shuffle
 
 import torch
 
@@ -102,7 +102,7 @@ def main():
         print("NO GPU DETECTED: falling back to CPU - this may take a while")
         n_gpus = 1
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = str(randint(20000, 55555))
+    os.environ["MASTER_PORT"] = str(secrets.SystemRandom().randint(20000, 55555))
     children = []
     logger = utils.get_logger(hps.model_dir)
     for i in range(n_gpus):
@@ -388,7 +388,7 @@ def train_and_evaluate(
                     )
         else:
             # Load shuffled cache
-            shuffle(cache)
+            secrets.SystemRandom().shuffle(cache)
     else:
         # Loader
         data_iterator = enumerate(train_loader)

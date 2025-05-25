@@ -1,6 +1,7 @@
 import os
 import sys
 from dotenv import load_dotenv
+import secrets
 
 now_dir = os.getcwd()
 sys.path.append(now_dir)
@@ -25,7 +26,6 @@ import pathlib
 import json
 from time import sleep
 from subprocess import Popen
-from random import shuffle
 import warnings
 import traceback
 import threading
@@ -531,7 +531,7 @@ def click_train(
                 "%s/logs/mute/0_gt_wavs/mute%s.wav|%s/logs/mute/3_feature%s/mute.npy|%s"
                 % (now_dir, sr2, now_dir, fea_dim, spk_id5)
             )
-    shuffle(opt)
+    secrets.SystemRandom().shuffle(opt)
     with open("%s/filelist.txt" % exp_dir, "w") as f:
         f.write("\n".join(opt))
     logger.debug("Write filelist done")

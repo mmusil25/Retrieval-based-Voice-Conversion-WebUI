@@ -1,5 +1,4 @@
 import os
-import random
 
 import numpy as np
 import torch
@@ -7,6 +6,7 @@ import torch.utils.data
 from tqdm import tqdm
 
 from . import spec_utils
+import secrets
 
 
 class VocalRemoverValidationSet(torch.utils.data.Dataset):
@@ -58,7 +58,7 @@ def train_val_split(dataset_dir, split_mode, val_rate, val_filelist):
             os.path.join(dataset_dir, "instruments"),
         )
 
-        random.shuffle(filelist)
+        secrets.SystemRandom().shuffle(filelist)
 
         if len(val_filelist) == 0:
             val_size = int(len(filelist) * val_rate)

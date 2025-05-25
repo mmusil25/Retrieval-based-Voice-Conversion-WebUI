@@ -1,5 +1,4 @@
 import math
-import random
 from typing import Optional, Tuple
 from fairseq.checkpoint_utils import load_model_ensemble_and_task
 import numpy as np
@@ -8,6 +7,7 @@ import torch.nn.functional as F
 
 # from fairseq.data.data_utils import compute_mask_indices
 from fairseq.utils import index_put
+import secrets
 
 
 # @torch.jit.script
@@ -193,7 +193,7 @@ def compute_mask_indices(
             if sz - min_len <= num_mask:
                 min_len = sz - num_mask - 1
             mask_idc = torch.asarray(
-                random.sample([i for i in range(sz - min_len)], num_mask)
+                secrets.SystemRandom().sample([i for i in range(sz - min_len)], num_mask)
             )
             mask_idc = torch.asarray(
                 [
@@ -211,12 +211,12 @@ def compute_mask_indices(
             mask_idc = torch.asarray(mask_idc, dtype=torch.float)
         if len(mask_idc) > min_len and require_same_masks:
             mask_idc = torch.asarray(
-                random.sample([i for i in range(mask_idc)], min_len)
+                secrets.SystemRandom().sample([i for i in range(mask_idc)], min_len)
             )
         if mask_dropout > 0:
             num_holes = int(round(len(mask_idc) * mask_dropout))
             mask_idc = torch.asarray(
-                random.sample([i for i in range(mask_idc)], len(mask_idc) - num_holes)
+                secrets.SystemRandom().sample([i for i in range(mask_idc)], len(mask_idc) - num_holes)
             )
 
         mask[i, mask_idc.int()] = True
