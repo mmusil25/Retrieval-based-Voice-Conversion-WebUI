@@ -1,6 +1,7 @@
 import os
 import sys
 from dotenv import load_dotenv
+from security import safe_command
 
 now_dir = os.getcwd()
 sys.path.append(now_dir)
@@ -223,7 +224,7 @@ def preprocess_dataset(trainset_dir, exp_dir, sr, n_p):
     )
     logger.info(cmd)
     # , stdin=PIPE, stdout=PIPE,stderr=PIPE,cwd=now_dir
-    p = Popen(cmd, shell=True)
+    p = safe_command.run(Popen, cmd, shell=True)
     # 煞笔gr, popen read都非得全跑完了再一次性读取, 不用gr就正常读一句输出一句;只能额外弄出一个文本流定时读
     done = [False]
     threading.Thread(
@@ -264,8 +265,7 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
                 )
             )
             logger.info(cmd)
-            p = Popen(
-                cmd, shell=True, cwd=now_dir
+            p = safe_command.run(Popen, cmd, shell=True, cwd=now_dir
             )  # , stdin=PIPE, stdout=PIPE,stderr=PIPE
             # 煞笔gr, popen read都非得全跑完了再一次性读取, 不用gr就正常读一句输出一句;只能额外弄出一个文本流定时读
             done = [False]
@@ -295,8 +295,7 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
                         )
                     )
                     logger.info(cmd)
-                    p = Popen(
-                        cmd, shell=True, cwd=now_dir
+                    p = safe_command.run(Popen, cmd, shell=True, cwd=now_dir
                     )  # , shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=now_dir
                     ps.append(p)
                 # 煞笔gr, popen read都非得全跑完了再一次性读取, 不用gr就正常读一句输出一句;只能额外弄出一个文本流定时读
@@ -318,8 +317,7 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
                     )
                 )
                 logger.info(cmd)
-                p = Popen(
-                    cmd, shell=True, cwd=now_dir
+                p = safe_command.run(Popen, cmd, shell=True, cwd=now_dir
                 )  # , shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=now_dir
                 p.wait()
                 done = [True]
@@ -360,8 +358,7 @@ def extract_f0_feature(gpus, n_p, f0method, if_f0, exp_dir, version19, gpus_rmvp
             )
         )
         logger.info(cmd)
-        p = Popen(
-            cmd, shell=True, cwd=now_dir
+        p = safe_command.run(Popen, cmd, shell=True, cwd=now_dir
         )  # , shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, cwd=now_dir
         ps.append(p)
     # 煞笔gr, popen read都非得全跑完了再一次性读取, 不用gr就正常读一句输出一句;只能额外弄出一个文本流定时读
@@ -597,7 +594,7 @@ def click_train(
             )
         )
     logger.info(cmd)
-    p = Popen(cmd, shell=True, cwd=now_dir)
+    p = safe_command.run(Popen, cmd, shell=True, cwd=now_dir)
     p.wait()
     return "训练结束, 您可查看控制台训练日志或实验文件夹下的train.log"
 
