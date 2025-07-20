@@ -4,6 +4,7 @@ import time
 import torch
 from tqdm import tqdm
 from collections import OrderedDict
+import fickling
 
 
 def load_inputs(path, device, is_half=False):
@@ -101,7 +102,7 @@ def export(
 
 def load(path: str):
     with open(path, "rb") as f:
-        return pickle.load(f)
+        return fickling.load(f)
 
 
 def save(ckpt: dict, save_path: str):
